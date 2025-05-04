@@ -1,37 +1,27 @@
-let text = '{}{}{}';
+let s = '([)]';
 
-function validParentheses(text){
-    const arrayText = text.split('');
+function isValid(s){
 
-    let count1 = 0;
-    let count2 = 0;
-    let count3 = 0;
+    const stack = [];
+    const pairs = {
+        ')' : '(',
+        ']' : '[',
+        '}' : '{'
+    };
 
-    let finalCount = 0;
-
-    for(i =0; i< arrayText.length; i++){
-        if(arrayText[i] == '('){
-            count1 += 1;
-        } else if(arrayText[i] == ')'){
-            count1 -=1;
-        } else if(arrayText[i] == '['){
-            count2 +=1;
-        } else if (arrayText[i] == ']'){
-            count2 -=1;
-        } else if (arrayText[i] == '{'){
-            count3 +=1;
-        } else if(arrayText[i] == '}'){
-            count3 -=1;
+    for (let char of s){
+        if(char === '(' || char === '{' || char == '['){
+            stack.push(char);
+        } else{
+            if (stack.length == 0 || stack.pop() !== pairs[char]){
+                return false
+            }
         }
     }
 
-    finalCount = count1 + count2 +count3;
 
-    if(finalCount != 0){
-        return console.log(false);
-    } else{
-        return console.log(true)
-    }
-}
+    return stack.length === 0;
 
-validParentheses(text);
+};
+
+console.log(isValid(s))
